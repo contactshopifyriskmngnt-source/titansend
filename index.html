@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<button id="googleLoginBtn"
+    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md mt-4">
+    Sign in with Google
+</button>
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3363,5 +3367,23 @@ let perfTimer = setInterval(() => {
 </script>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"3c444da3cd804f848f99706ed426dbf6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>
+const CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID"; 
+const REDIRECT_URI = "https://titansend.vercel.app/auth/callback";
+
+document.getElementById("googleLoginBtn").addEventListener("click", () => {
+
+    const oauthURL =
+        "https://accounts.google.com/o/oauth2/v2/auth" +
+        "?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.send" +
+        "&access_type=offline" +
+        "&include_granted_scopes=true" +
+        "&response_type=code" +
+        "&redirect_uri=" + encodeURIComponent(REDIRECT_URI) +
+        "&client_id=" + CLIENT_ID;
+
+    window.location.href = oauthURL;
+});
+</script>
 </body>
 </html>
