@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,6 +56,9 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
    
+    <!-- TitanSend Analytics Logger -->
+    <script src="https://cdn.jsdelivr.net/gh/YOUR_USERNAME/titansend-analytics@main/TitanSendLogger.js"></script>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -627,6 +631,10 @@
         <div class="perf-meter hidden md:flex">
           <span id="perfScore" class="text-xs font-bold z-10" style="color:#1E1B4B;">98</span>
         </div>
+        <!-- Analytics Dashboard Button -->
+        <a href="http://localhost:5000/../dashboard.html" target="_blank" rel="noopener" class="text-white hover:text-pink-300 transition-all p-2 hover:bg-white/10 rounded-full" title="📊 View Email Analytics Dashboard">
+          <i class="ri-bar-chart-line text-xl"></i>
+        </a>
         <a href="https://www.x.com/adexdigitalhub" class="text-white hover:text-pink-300 transition-all p-2 hover:bg-white/10 rounded-full">
           <i class="ri-twitter-x-fill text-xl"></i>
         </a>
@@ -1790,6 +1798,7 @@
       const batchSize = parseInt(document.getElementById('batchSize').value) || 50;
       const totalEmails = recipientList.filter(r => r.trim()).length;
       let processedCount = 0;
+      const campaignId = `campaign_${Date.now()}`; // Create unique campaign ID
       updateCounters();
 
       const workerCode = `
@@ -1888,6 +1897,8 @@
               } else openedWindow.focus();
               requestAnimationFrame(() => { updateCounters(); updateAnalytics(); update24hDisplay(); });
               addLiveActivity(`📧 Opened email for ${result.email}`);
+              // Log to analytics
+              logEmailToAnalytics(result.email, result.subject, `campaign_${Date.now()}`);
               if (allTimeSent.size % 50 === 0) {
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
                 showAlert(`🚀 Milestone! ${allTimeSent.size} emails sent!`);
@@ -2028,6 +2039,31 @@
       activityFeed.insertBefore(activity, activityFeed.firstChild);
       while (activityFeed.children.length > 10) activityFeed.removeChild(activityFeed.lastChild);
       activityFeed.scrollTop = 0;
+    }
+
+    // TitanSend Analytics Integration
+    async function logEmailToAnalytics(email, subject, campaignId) {
+      try {
+        // Only log if TitanLogger is available
+        if (typeof TitanLogger !== 'undefined') {
+          const result = await TitanLogger.logEmail({
+            email: email,
+            subject: subject,
+            campaignId: campaignId || 'titansend_default',
+            userId: 'titansend_user',
+            personalizationData: {
+              timestamp: new Date().toISOString(),
+              sentFrom: 'titansend_web_app'
+            }
+          });
+          if (result && result.success) {
+            console.log('📊 Analytics logged:', result.logId);
+            addLiveActivity(`📊 Analytics: ${email}`);
+          }
+        }
+      } catch (error) {
+        console.warn('⚠️ Analytics logging error:', error.message);
+      }
     }
 
     const performGlobalSearch = debounce(function (query) {
