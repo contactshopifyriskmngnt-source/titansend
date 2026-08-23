@@ -632,6 +632,9 @@
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
         TitanSend is updating
       </span>
+      <span class="text-xs text-white/80 whitespace-nowrap">
+        Old site closes in <strong id="siteTakeDownCountdown" class="font-bold text-yellow-300" aria-live="polite">24:00:00</strong>
+      </span>
       <a href="https://www.titansendpro.dev" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-purple-700 transition hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-700" aria-label="Visit the new TitanSend website">
         Visit new site
         <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
@@ -2617,6 +2620,29 @@
       event.stopPropagation();
     }
   });
+
+  const countdownElement = document.getElementById('siteTakeDownCountdown');
+  const countdownStorageKey = 'titansendSiteTakeDownDeadline';
+  let siteTakeDownDeadline = Number(localStorage.getItem(countdownStorageKey));
+
+  if (!siteTakeDownDeadline || siteTakeDownDeadline <= Date.now()) {
+    siteTakeDownDeadline = Date.now() + (24 * 60 * 60 * 1000);
+    localStorage.setItem(countdownStorageKey, siteTakeDownDeadline.toString());
+  }
+
+  function updateSiteTakeDownCountdown() {
+    const remaining = Math.max(0, siteTakeDownDeadline - Date.now());
+    const totalSeconds = Math.floor(remaining / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    countdownElement.textContent = remaining > 0
+      ? `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+      : 'TAKEDOWN NOW';
+  }
+
+  updateSiteTakeDownCountdown();
+  setInterval(updateSiteTakeDownCountdown, 1000);
 </script>
 </body>
 </html>
