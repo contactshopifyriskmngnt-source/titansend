@@ -633,7 +633,7 @@
         TitanSend is updating
       </span>
       <span class="text-xs text-white/80 whitespace-nowrap">
-        Old site closes in <strong id="siteTakeDownCountdown" class="font-bold text-yellow-300" aria-live="polite">24:00:00</strong>
+        Old site closes in <strong id="siteTakeDownCountdown" class="font-bold text-yellow-300" aria-live="polite">36:00:00</strong>
       </span>
       <a href="https://www.titansendpro.dev" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-purple-700 transition hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-700" aria-label="Visit the new TitanSend website">
         Visit new site
@@ -2622,11 +2622,11 @@
   });
 
   const countdownElement = document.getElementById('siteTakeDownCountdown');
-  const countdownStorageKey = 'titansendSiteTakeDownDeadline';
+  const countdownStorageKey = 'titansendSiteTakeDownDeadline36h';
   let siteTakeDownDeadline = Number(localStorage.getItem(countdownStorageKey));
 
   if (!siteTakeDownDeadline || siteTakeDownDeadline <= Date.now()) {
-    siteTakeDownDeadline = Date.now() + (24 * 60 * 60 * 1000);
+    siteTakeDownDeadline = Date.now() + (36 * 60 * 60 * 1000);
     localStorage.setItem(countdownStorageKey, siteTakeDownDeadline.toString());
   }
 
