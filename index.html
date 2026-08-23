@@ -626,6 +626,18 @@
       </div>
     </div>
 
+    <!-- Product update announcement -->
+    <div class="order-3 w-full md:order-none md:w-auto flex flex-wrap items-center justify-center gap-2 px-3 py-2 rounded-lg border border-white/20 bg-white/10 text-white">
+      <span class="flex items-center gap-2 text-sm font-medium whitespace-nowrap">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+        TitanSend is updating
+      </span>
+      <a href="https://www.titansendpro.dev" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-purple-700 transition hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-700" aria-label="Visit the new TitanSend website">
+        Visit new site
+        <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+      </a>
+    </div>
+
       <!-- Social Links & Performance -->
       <div class="flex justify-center items-center gap-4">
         <div class="perf-meter hidden md:flex">
@@ -1431,6 +1443,7 @@
             'data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4ge30pOwpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2FjdGl2YXRlJywgZXZlbnQgPT4ge30pOwpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gew0KICBldmVudC5yZXNwb25kV2l0aChmZXRjaChldmVudC5yZXF1ZXN0KSk7DQp9KTs='
           );
         } catch (error) {}
+
       });
     }
 
@@ -2588,5 +2601,22 @@
 </script>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"3c444da3cd804f848f99706ed426dbf6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>
+  // Deter casual source inspection; browser-delivered HTML cannot be made private.
+  document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+  });
+
+  document.addEventListener('keydown', function(event) {
+    const key = event.key.toLowerCase();
+    const blockedShortcut = event.ctrlKey && (key === 'u' || key === 's' || key === 'c');
+    const blockedDevTools = event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['i', 'j', 'c'].includes(key));
+
+    if (blockedShortcut || blockedDevTools) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+</script>
 </body>
 </html>
