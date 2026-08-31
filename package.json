@@ -1,0 +1,21 @@
+{
+  "name": "titansend",
+  "version": "1.0.0",
+  "description": "TitanSend - Advanced Bulk Email Outreach Tool PWA",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build required'",
+    "lint": "echo 'No linter configured for static site'"
+  },
+  "keywords": [
+    "email",
+    "outreach",
+    "pwa"
+  ],
+  "author": "TitanSend Team",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.3.1"
+  }
+}
